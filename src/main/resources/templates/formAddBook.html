@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+<div th:replace="/fragments/logo :: logo"/>
+
+<div class="container container_custom mb-5">
+    <div class="row">
+        <div th:replace="/fragments/header :: navbar"/>
+
+        <div class="col-xl-12 middle_panel py-5 order-3 order-xl-2">
+
+
+        <form th:method="POST" th:action="@{/books}" th:object="${book}">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Nazwa</label>
+                <input type="text" class="form-control" id="name" placeholder="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Cena</label>
+                <input type="number" class="form-control" id="price" placeholder="price" name="price">
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Ilość</label>
+                <input type="text" class="form-control" id="quantity" placeholder="quantity" name="quantity">
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Data wydania</label>
+                <input id="date" type="date" th:value="*{date}" th:field="*{date}" placeholder="date" name="date">
+            </div>
+            <div class="mb-3">
+                <label for="percentOfPromotion" class="form-label">Promocja(%)</label>
+                <input type="number" class="form-control" id="percentOfPromotion" placeholder="percentOfPromotion" name="percentOfPromotion">
+            </div>
+            <div class="mb-3">
+                <label for="author" class="form-label">Autor</label>
+                <input type="text" class="form-control" id="author" placeholder="author" name="author">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Zdjecie</label>
+                <input type="text" class="form-control" id="image" placeholder="image" name="image">
+            </div>
+            <div class="mb-3">
+                <label for="numOfPages" class="form-label">Liczba stron</label>
+                <input type="number" class="form-control" id="numOfPages" placeholder="numOfPages" name="numOfPages">
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Kategoria</label>
+                <input type="text" class="form-control" id="category" placeholder="category" name="category">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+            </div>
+
+            <button> Dodaj </button>
+
+        </form>
+
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+    <div th:replace="/fragments/footer :: footer"/>
+</div>
+</body>
+
+</html>

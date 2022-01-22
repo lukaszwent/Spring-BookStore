@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+<div th:replace="/fragments/logo :: logo"/>
+
+<div class="container container_custom mb-5">
+    <div class="row">
+        <div th:replace="/fragments/header :: navbar"/>
+
+        <div class="col-xl-12 middle_panel py-5 px-5 order-3 order-xl-2">
+
+
+            <h1>Register page</h1>
+
+            <form th:action="@{/registration}" method="POST" th:object="${User}" class="needs-validation" novalidate>
+
+                <div class="mb-3 has-validation">
+                    <label for="firstname" class="form-label">Firstname</label>
+                    <input type="text" class="form-control" id="firstname"  name="firstname" autofocus="autofocus" aria-describedby="firstname" th:field="*{firstName}" required>
+                    <div class="invalid-feedback">
+                        Please choose a firstname.
+                    </div>
+                </div>
+                <div class="mb-3 has-validation">
+                    <label for="lastname" class="form-label">Lastname</label>
+                    <input type="text" class="form-control" id="lastname"  name="lastname" autofocus="autofocus" aria-describedby="lastname" th:field="*{lastName}" required>
+                    <div class="invalid-feedback">
+                        Please choose a lastname.
+                    </div>
+                </div>
+                <div class="mb-3 has-validation">
+                    <label for="username" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="username"  name="username" autofocus="autofocus" aria-describedby="username" th:field="*{email}" required>
+                    <div class="invalid-feedback">
+                        Please choose a email.
+                    </div>
+                </div>
+                <div class="mb-3 has-validation">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password"  name="password" autofocus="autofocus" aria-describedby="password" th:field="*{password}" required>
+                    <div class="invalid-feedback">
+                        Please choose a password.
+                    </div>
+                </div>
+
+                <input type="submit" value="Register" />
+            </form>
+
+        </div>
+
+
+
+    </div>
+    <div th:replace="/fragments/footer :: footer"/>
+</div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+</body>
+
+</html>

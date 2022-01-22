@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+<div th:replace="/fragments/logo :: logo"/>
+
+<div class="container container_custom mb-5">
+    <div class="row">
+        <div th:replace="/fragments/header :: navbar"/>
+
+        <div class="col-xl-12 middle_panel py-5 px-5 order-3 order-xl-2">
+        <div class="container" sec:authorize="isAuthenticated()">
+
+
+            <h1 >
+                Koszyk <span sec:authentication="name"></span>
+            </h1>
+
+
+
+            <div class=" col-xl-4" th:each="product : ${products.entrySet()}">
+                <div class="d-flex align-items-center flex-column">
+                    <h1><a th:text="${product.getKey().name}" th:href="@{'/books/' + ${product.getKey().id}}">Title</a></h1>
+                    <img th:src="${product.getKey().getImage()}" class="smallShopping"/>
+
+                </div>
+                <div class="d-flex align-items-center flex-column">
+                    <div th:inline="text" class="">Price: [[${product.getKey().price}]] $</div>
+                    <div th:inline="text" class="">Quantity: [[${product.getValue()}]]</div>
+                    <a th:href="@{'/shoppingCart/removeProduct/{id}'(id=${product.getKey().id})}" class="">
+                        <button type="button" class="btn btn-primary" th:text="Remove">Remove</button>
+                    </a>
+                </div>
+                <br></br>
+            </div>
+
+            <div class="row panel-body">
+                <h2 class="col-md-11" th:inline="text">Total: [[${total}]]</h2>
+
+                    <form method="post" th:action="@{/shoppingCart/checkout}" class="needs-validation" novalidate>
+                        <div class="input-group has-validation">
+                        <div class="col-3"><label for="country" class="form-label">Kraj:</label></div>
+                        <div class="col-9"><input type="text" id="country" name="country" class="form-control"> </div>
+                        <div class="invalid-feedback">
+                            Please provide country name.
+                        </div>
+                        </div>
+                        <div class="input-group has-validation">
+                            <div class="col-3"><label for="state" class="form-label">Województwo:</label></div>
+                            <div class="col-9"><input type="text" id="state" name="state" class="form-control"> </div>
+                        <div class="invalid-feedback">
+                            Please provide state name.
+                        </div>
+                        </div>
+                        <div class="input-group has-validation">
+                            <div class="col-3"><label for="street" class="form-label">Ulica</label></div>
+                            <div class="col-9"><input type="text" id="street" name="street" class="form-control"> </div>
+                        <div class="invalid-feedback">
+                            Please provide country street with number.
+                        </div>
+                        </div>
+                        <div> Dostawa: </div>
+                        <input type="radio" name="delivery" id="courier"> Kurier <br/>
+                        <input type="radio" name="delivery" id="inShop"> Na miejscu <br/>
+                    <button type="submit" class="btn btn-danger" th:text="Checkout" >Checkout</button>
+                    </form>
+
+            </div>
+        </div>
+            <div class="container" sec:authorize="isAnonymous()">
+                Aby zakupić produkty z naszego sklepu musisz się zalogować.
+            </div>
+        </div>
+
+
+
+    </div>
+    <div th:replace="/fragments/footer :: footer"/>
+</div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+</body>
+
+</html>

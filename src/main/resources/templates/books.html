@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+<div th:replace="/fragments/logo :: logo"/>
+
+<div class="container container_custom mb-5">
+    <div class="row">
+        <div th:replace="/fragments/header :: navbar"/>
+
+        <div  class="col-xl-12 middle_panel py-5 px-5 order-3 order-xl-2">
+
+            <div th:if="${TYPE=='categories'}" th:each="cat : ${categories}">
+
+                    <a th:text="${cat}" th:href="@{'/books/categories/{query}'(query=${cat})}"></a>
+
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/books/form/new}">Dodaj nową ksążke</a>
+            </div>
+
+            <!--/*@thymesVar id="projects" type="java.util.List<io.github.mat3e.model.Project>"*/-->
+            <div class="d-flex flex-xl-row flex-column flex-wrap justify-content-center align-items-center">
+                <div class="col-xl-3 product m-4" data-aos="fade-in" th:each="book : ${books}">
+                    <div><img th:src="${book.getImage()} " th:href="@{'/books/{id}'(id=${book.id})}"></div>
+                    <div ><a th:text="${book.getName()}" th:href="@{'/books/{id}'(id=${book.id})}"></a></div>
+                    <div> <strike th:text="|${book.getPrice()} zł|" th:if="${book.getPercentOfPromotion() != 0}"></strike>
+                        <span th:text="|${book.getPrice() - ((book.getPrice()*(book.getPercentOfPromotion()))/100)} zł|"></span> </div>
+                    <div th:if="${book.getQuantity()>0}"><a th:href="@{'/shoppingCart/addProduct/{id}'(id=${book.id})}">Dodaj do koszyka</a></div>
+                    <div th:if="${book.getQuantity()<=0}">Brak towaru</div>
+
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <div><a th:text="Edytuj" th:href="@{'/books/{id}/edit'(id=${book.id})}"></a></div>
+                        <div>
+                            <form action="#" th:action="@{'/books/{id}/delete'(id=${book.id})}"  th:method="delete" >
+                                <input type="hidden" name="_method" value="delete" />
+                                <button type="submit" id="submitButton">Usuń </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div th:replace="/fragments/pagination :: pagination" />
+
+        </div>
+
+
+
+    </div>
+    <div th:replace="/fragments/footer :: footer"/>
+</div>
+</body>
+
+</html>

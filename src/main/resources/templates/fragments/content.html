@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+<div th:fragment="content">
+<div class="col-xl-12 middle_panel py-5 px-5 order-3 order-xl-2">
+    <div class="input-group mb-3">
+        <button class="btn bg-white search" type="button" id="button-addon1"><i
+                class="bi bi-search"></i></button>
+        <input type="text" class="form-control form-control-lg" placeholder="Search"
+               aria-label="Example text with button addon" aria-describedby="button-addon1">
+    </div>
+
+    <!--/*@thymesVar id="projects" type="java.util.List<io.github.mat3e.model.Project>"*/-->
+    <ul th:each="book : ${books}" class="Bd P(10px)">
+        <li th:text="${book.getId()}">...</li>
+        <li th:text="${book.getName()}">...</li>
+        <li th:text="${book.getPrice()}">...</li>
+        <li th:text="${book.getQuantity()}">...</li>
+        <li th:text="${book.getCategory()}">...</li>
+        <li th:text="${book.getPercentOfPromotion()}">...</li>
+        <li>
+            <div th:inline="text" class="col-md-2">Price: [[${book.price}]] $</div>
+            <div th:inline="text" class="col-md-9">In Stock: [[${book.quantity}]]</div>
+            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${book.id})}" class="col-md-1"
+               sec:authorize="isAuthenticated()" th:if="${book.quantity}>0">
+                <button type="button" class="btn btn-primary" th:text="Buy">Buy</button>
+            </a>
+
+
+
+
+        </li>
+    </ul>
+
+
+</div>
+
+</div>
+</body>
+</html>

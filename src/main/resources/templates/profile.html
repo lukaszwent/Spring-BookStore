@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+<div th:replace="/fragments/logo :: logo"/>
+
+<div class="container container_custom mb-5">
+    <div class="row">
+        <div th:replace="/fragments/header :: navbar"/>
+
+        <div class="col-xl-12 middle_panel py-5 px-5 order-3 order-xl-2">
+            <h2>Historia Zamówień</h2>
+            <div th:each="tran : ${Transactions}">
+                <div class="mb-3 border border-1">
+                    <table>
+                        <tr>
+                            <td>
+                                Nazwa książki
+                            </td>
+                            <td colspan="3">
+                                Zamieszkanie
+                            </td>
+                            <td>
+                                Zapłacono
+                            </td>
+                        </tr>
+                        <tr>
+                            <td th:text="${tran.getBooks().getName()}"></td>
+                            <td th:text="${tran.getCountry()}"></td>
+                            <td th:text="${tran.getState()}"></td>
+                            <td th:text="${tran.getStreet()}"></td>
+                            <td th:text="${tran.getPaid()}"></td>
+                        </tr>
+                    </table>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+    <div th:replace="/fragments/footer :: footer"/>
+</div>
+</body>
+
+</html>

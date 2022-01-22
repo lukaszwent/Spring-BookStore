@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+
+</head>
+
+<body>
+<div th:fragment="pagination">
+
+
+    <div class="col-12 d-flex justify-content-evenly align-items-end" th:if="${TYPE != 'normal'}">
+        <form th:action="@{'/books/{typ}'(typ=${TYPE})}"><button name="page" th:value="${ books.getPageable().getPageNumber()-1}" th:disabled="${!books.hasPrevious()}">Poprzednia strona</button></form>
+        <form th:action="@{'/books/{typ}'(typ=${TYPE})}"><button name="page" th:value="${ books.getPageable().getPageNumber()+1}" th:disabled="${!books.hasNext()}">Nastepna strona</button></form>
+    </div>
+    <div class="col-12 d-flex justify-content-evenly align-items-end" th:if="${TYPE == 'normal'}">
+        <form th:action="@{/books}"><button name="page" th:value="${ books.getPageable().getPageNumber()-1}" th:type="submit" th:disabled="${!books.hasPrevious()}">Poprzednia strona</button></form>
+        <form th:action="@{/books}"><button name="page" th:value="${ books.getPageable().getPageNumber()+1}" th:type="submit" th:disabled="${!books.hasNext()}">Nastepna strona</button></form>
+    </div>
+</div>
+</body>
+
+</html>
